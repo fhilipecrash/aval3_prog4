@@ -1,30 +1,21 @@
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {
-  static const String routeName = '/settings';
+  static const routeName = '/settings';
 
   const SettingsPage({Key? key}) : super(key: key);
 
   @override
-  _SettingsPageState createState() => _SettingsPageState();
+  createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  late TextEditingController _textEditingController;
-  int _selectedImageCount = 10;
+  final _imageCountController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    _textEditingController = TextEditingController(text: '$_selectedImageCount');
-  }
-
-  void _saveSettings() {
-    final enteredValue = int.tryParse(_textEditingController.text);
-    setState(() {
-      _selectedImageCount = enteredValue ?? 10;
-    });
-    Navigator.pop(context, _selectedImageCount);
+  void dispose() {
+    _imageCountController.dispose();
+    super.dispose();
   }
 
   @override
@@ -36,35 +27,72 @@ class _SettingsPageState extends State<SettingsPage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
               'Criadores:',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 10),
-            const Text('Luis Henrique Sousa Brasil'),
+            const SizedBox(height: 8),
+            const Text('Fulano'),
             const Text('Ciclano'),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
             const Text(
-              'Quantidade de imagens:',
+              'Quantidade de Imagens:',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
             Row(
               children: [
                 Expanded(
-                  child: TextField(
-                    controller: _textEditingController,
+                  child: TextFormField(
+                    controller: _imageCountController,
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Quantidade',
+                    decoration: const InputDecoration(
+                      labelText: 'Número de Imagens (1-20)',
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Digite um número válido';
+                      }
+                      final imageCount = int.tryParse(value);
+                      if (imageCount == null ||
+                          imageCount < 1 ||
+                          imageCount > 20) {
+                        return 'Digite um número válido (1-20)';
+                      }
+                      return null;
+                    },
                   ),
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(width: 16),
                 ElevatedButton(
-                  onPressed: _saveSettings,
+                  onPressed: () {
+                    final imageCount = int.tryParse(_imageCountController.text);
+                    if (imageCount != null &&
+                        imageCount >= 1 &&
+                        imageCount <= 20) {
+                      Navigator.pop(context, imageCount);
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('Erro'),
+                            content: const Text('Digite um número válido (1-20)'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  },
                   child: const Text('Salvar'),
                 ),
               ],

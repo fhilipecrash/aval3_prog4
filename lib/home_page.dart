@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import './image_details_page.dart';
-import './date_formatter.dart';
 import './settings_page.dart';
+import 'date_formatter.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,15 +15,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<dynamic> imageUrls = [];
+  int _selectedImageCount = 10;
 
   @override
   void initState() {
     super.initState();
-    generateDates();
+    generateDates(_selectedImageCount);
   }
 
-  void generateDates() {
-    for (var i = 0; i < 20; i++) {
+  void generateDates(int imageCount) {
+    for (var i = 0; i < imageCount; i++) {
       DateTime startDate = DateTime(1995, 7, 1);
       DateTime currentDate = DateTime.now();
       DateTime randomDate = generateRandomDate(startDate, currentDate);
@@ -56,16 +57,16 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       imageUrls.clear();
     });
-    generateDates();
+    generateDates(_selectedImageCount);
   }
 
   void openSettingsPage() async {
-    final result = await Navigator.pushNamed(context, SettingsPage.routeName);
+    final result = await Navigator.pushNamed(context, SettingsPage.routeName) as int?;
     if (result != null) {
       setState(() {
-        imageUrls.clear();
+        _selectedImageCount = result;
       });
-      generateDates();
+      clearImages();
     }
   }
 
@@ -80,22 +81,22 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.settings),
             onPressed: openSettingsPage,
+            icon: const Icon(Icons.settings),
           ),
         ],
       ),
-      body: Column(
-        children: [
-          ElevatedButton(
-            onPressed: clearImages,
-            child: const Text('Atualizar imagens'),
-          ),
-          Expanded(
-            child: RefreshIndicator(
-              onRefresh: () async {
-                clearImages();
-              },
+      body: RefreshIndicator(
+        onRefresh: () async {
+          clearImages();
+        },
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: clearImages,
+              child: const Text('Atualizar imagens'),
+            ),
+            Expanded(
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
@@ -166,8 +167,8 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

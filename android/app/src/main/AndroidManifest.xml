@@ -1,4 +1,8 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.my_app_nasa_api">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:label="my_app_nasa_api"
         android:name="${applicationName}"
@@ -30,4 +34,5 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+
 </manifest>

@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const HomePage(),
       routes: {
-        SettingsPage.routeName: (context) => SettingsPage(),
+        '/settings': (context) => const SettingsPage(),
       },
     );
   }

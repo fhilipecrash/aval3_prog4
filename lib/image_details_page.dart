@@ -54,7 +54,7 @@ class ImageDetailsPage extends StatelessWidget {
             subtitle: Text(image['explanation']),
           ),
           ListTile(
-            title: const Text('Copyright:'),
+            title: const Text('Direitos autorais:'),
             subtitle: Text(image['copyright'] ?? 'Não fornecido pela API'),
           ),
           if (image['media_type'] == 'video')
