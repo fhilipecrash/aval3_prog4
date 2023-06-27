@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'imports/imports.dart';
 
 class SettingsPage extends StatefulWidget {
   static const routeName = '/settings';
@@ -24,23 +24,83 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(
         title: const Text('Configurações'),
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(16.0),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Criadores:',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            const CreatorsList(),
+            const Text('Quantidade de Imagens:'),
+            ImageCountInput(
+              controller: _imageCountController,
             ),
-            SizedBox(height: 8),
-            Text('Fulano'),
-            Text('Ciclano'),
-            SizedBox(height: 16),
-            SizedBox(height: 8),
           ],
         ),
       ),
+    );
+  }
+}
+
+class ImageCountInput extends StatelessWidget {
+  final TextEditingController controller;
+
+  const ImageCountInput({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: TextField(
+            controller: controller,
+            keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            decoration: InputDecoration(
+              errorText: _validateInput(controller.text),
+            ),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            if (_validateInput(controller.text) == null) {
+              Navigator.pop(context, int.parse(controller.text));
+            }
+          },
+          child: const Text('Salvar'),
+        ),
+      ],
+    );
+  }
+
+  String? _validateInput(String value) {
+    final number = int.tryParse(value);
+    if (number == null || number < 1 || number > 20) {
+      return 'Opa! Valor inválido.';
+    }
+    return null;
+  }
+}
+
+class CreatorsList extends StatelessWidget {
+  const CreatorsList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Criadores:',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 8),
+        Text('Fulano'),
+        Text('Ciclano'),
+        SizedBox(height: 16),
+      ],
     );
   }
 }

@@ -1,10 +1,5 @@
-import 'dart:convert';
-import 'dart:math';
-import 'package:flutter/material.dart';
+import '../imports/imports.dart';
 import 'package:http/http.dart' as http;
-import './image_details_page.dart';
-import './settings_page.dart';
-import 'date_formatter.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -61,7 +56,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   void openSettingsPage() async {
-    final result = await Navigator.pushNamed(context, SettingsPage.routeName) as int?;
+    final result =
+        await Navigator.pushNamed(context, SettingsPage.routeName) as int?;
     if (result != null) {
       setState(() {
         _selectedImageCount = result;
@@ -100,7 +96,7 @@ class _HomePageState extends State<HomePage> {
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 0.8,
+                  childAspectRatio: 0.7,
                 ),
                 itemCount: imageUrls.length,
                 itemBuilder: (context, index) {
@@ -122,42 +118,52 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           AspectRatio(
-                            aspectRatio: 16 / 9,
-                            child: Image.network(
-                              imageUrl,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Container(
-                                  color: Colors.grey,
-                                  child: const Center(
-                                    child: Text(
-                                      "Abra para obter mais informações",
-                                      style: TextStyle(color: Colors.white),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                );
-                              },
+                            aspectRatio: 1.0,
+                            child: ClipOval(
+                              child: imageUrl != null
+                                  ? Image.network(
+                                      imageUrl,
+                                      fit: BoxFit.cover,
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return Container(
+                                          color: Colors.white,
+                                          child: const Center(
+                                            child: Text(
+                                              "Abra para obter mais informações",
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    )
+                                  : Container(),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  title,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
+                          Flexible(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      title,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  formatDate(date),
-                                  style: const TextStyle(
-                                    color: Colors.grey,
+                                  Text(
+                                    formatDate(date),
+                                    style: const TextStyle(
+                                      color: Colors.grey,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ],

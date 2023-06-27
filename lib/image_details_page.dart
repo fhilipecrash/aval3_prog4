@@ -1,14 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-
+import 'imports/imports.dart';
 class ImageDetailsPage extends StatelessWidget {
   final Map<String, dynamic> image;
 
   const ImageDetailsPage({Key? key, required this.image}) : super(key: key);
 
   Future<void> _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+    final uri = Uri.parse(url);
+    if (await canLaunch(uri.toString())) {
+      await launch(uri.toString());
     } else {
       throw 'Não foi possível abrir $url';
     }
@@ -30,7 +29,7 @@ class ImageDetailsPage extends StatelessWidget {
                 color: Colors.grey,
                 child: const Center(
                   child: Text(
-                    'A imagem não pode ser carregada, pois é um vídeo. Por favor, clique no botão próximo do copyright para assistir.',
+                    'A imagem não pode ser carregada, pois é um arquivo diferente de imagem. Por favor, clique no botão próximo do copyright para abrir o arquivo no navegador.',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 15,
@@ -61,7 +60,7 @@ class ImageDetailsPage extends StatelessWidget {
             Center(
               child: ElevatedButton(
                 onPressed: () => _launchURL(image['url']),
-                child: const Text('Assistir'),
+                child: const Text('Abrir'),
               ),
             ),
         ],
@@ -69,3 +68,4 @@ class ImageDetailsPage extends StatelessWidget {
     );
   }
 }
+// ignore_for_file: deprecated_member_use
