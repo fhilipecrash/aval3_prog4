@@ -1,16 +1,31 @@
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {
-  static const routeName = '/settings';
+  static const String routeName = '/settings';
 
   const SettingsPage({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _SettingsPageState();
+  _SettingsPageState createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  String selectedValue = '10';
+  late TextEditingController _textEditingController;
+  int _selectedImageCount = 10;
+
+  @override
+  void initState() {
+    super.initState();
+    _textEditingController = TextEditingController(text: '$_selectedImageCount');
+  }
+
+  void _saveSettings() {
+    final enteredValue = int.tryParse(_textEditingController.text);
+    setState(() {
+      _selectedImageCount = enteredValue ?? 10;
+    });
+    Navigator.pop(context, _selectedImageCount);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,47 +36,38 @@ class _SettingsPageState extends State<SettingsPage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
               'Criadores:',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
-            const Text('Fulano'),
+            const SizedBox(height: 10),
+            const Text('Luis Henrique Sousa Brasil'),
             const Text('Ciclano'),
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
             const Text(
-              'Quantidade de imagens exibidas:',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              'Quantidade de imagens:',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
-            DropdownButton<String>(
-              value: selectedValue,
-              onChanged: (newValue) {
-                setState(() {
-                  selectedValue = newValue!;
-                });
-              },
-              items: List.generate(20, (index) => index + 1)
-                  .map((value) => DropdownMenuItem<String>(
-                        value: value.toString(),
-                        child: Text(value.toString()),
-                      ))
-                  .toList(),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context, selectedValue);
-              },
-              child: const Text('Salvar'),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _textEditingController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Quantidade',
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: _saveSettings,
+                  child: const Text('Salvar'),
+                ),
+              ],
             ),
           ],
         ),

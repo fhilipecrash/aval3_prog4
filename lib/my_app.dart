@@ -15,7 +15,6 @@ class MyApp extends StatelessWidget {
       ),
       home: const HomePage(),
       routes: {
-        // ignore: prefer_const_constructors
         SettingsPage.routeName: (context) => SettingsPage(),
       },
     );
