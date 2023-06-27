@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<dynamic> imageUrls = [];
-  int _selectedImageCount = 10;
+  int _selectedImageCount = 14;
 
   @override
   void initState() {
