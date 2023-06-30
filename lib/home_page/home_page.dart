@@ -88,10 +88,6 @@ class _HomePageState extends State<HomePage> {
         },
         child: Column(
           children: [
-            ElevatedButton(
-              onPressed: clearImages,
-              child: const Text('Atualizar imagens'),
-            ),
             Expanded(
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -132,10 +128,9 @@ class _HomePageState extends State<HomePage> {
                                             child: Text(
                                               "Abra para obter mais informações",
                                               style: TextStyle(
-                                                  fontSize: 20,
+                                                  fontSize: 24,
                                                   color: Colors.white),
                                               textAlign: TextAlign.center,
-                                              
                                             ),
                                           ),
                                         );
@@ -178,6 +173,12 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white,
+        onPressed: clearImages,
+        child: const Icon(Icons.refresh, color: Colors.black, size: 30,),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

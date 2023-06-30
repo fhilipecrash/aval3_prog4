@@ -27,12 +27,12 @@ class ImageDetailsPage extends StatelessWidget {
             fit: BoxFit.cover,
             errorBuilder: (context, error, stackTrace) {
               return Container(
-                color: Colors.grey,
+                color: Colors.white,
                 child: const Center(
                   child: Text(
                     'A imagem não pode ser carregada, pois é um arquivo diferente de imagem. Por favor, clique no botão próximo do copyright para abrir o arquivo no navegador.',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 18,
                     ),
                     textAlign: TextAlign.center,
