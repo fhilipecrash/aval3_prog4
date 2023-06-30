@@ -30,7 +30,10 @@ class _SettingsPageState extends State<SettingsPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const CreatorsList(),
-            const Text('Quantidade de Imagens:'),
+            const Text(
+              'Quantidade de Imagens:',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
             ImageCountInput(
               controller: _imageCountController,
             ),
@@ -97,8 +100,9 @@ class CreatorsList extends StatelessWidget {
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 8),
-        Text('Fulano'),
-        Text('Ciclano'),
+        Text('Luis Henrique Sousa Brasil'),
+        Text('Laércio'),
+        Text('Laércio'),
         SizedBox(height: 16),
       ],
     );

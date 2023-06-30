@@ -3,8 +3,8 @@
 export '../image_details_page.dart';
 export '../my_app.dart';
 export '../settings_page.dart';
-export '../home_page.dart';
-export '../date_formatter.dart';
+export '../home_page/home_page.dart';
+export '../date_formatter/date_formatter.dart';
 
 export 'dart:math';
 
