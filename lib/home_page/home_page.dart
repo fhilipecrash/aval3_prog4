@@ -127,13 +127,15 @@ class _HomePageState extends State<HomePage> {
                                       errorBuilder:
                                           (context, error, stackTrace) {
                                         return Container(
-                                          color: Colors.white,
+                                          color: Colors.black,
                                           child: const Center(
                                             child: Text(
                                               "Abra para obter mais informações",
                                               style: TextStyle(
+                                                  fontSize: 20,
                                                   color: Colors.white),
                                               textAlign: TextAlign.center,
+                                              
                                             ),
                                           ),
                                         );

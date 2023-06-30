@@ -1,4 +1,4 @@
-import 'imports/imports.dart';
+import '../imports/imports.dart';
 
 class SettingsPage extends StatefulWidget {
   static const routeName = '/settings';
@@ -44,7 +44,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 }
 
-class ImageCountInput extends StatelessWidget {
+class ImageCountInput extends StatefulWidget {
   final TextEditingController controller;
 
   const ImageCountInput({
@@ -53,26 +53,42 @@ class ImageCountInput extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  createState() => _ImageCountInputState();
+}
+
+class _ImageCountInputState extends State<ImageCountInput> {
+  bool _showError = false;
+
+  @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Expanded(
           child: TextField(
-            controller: controller,
+            controller: widget.controller,
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            onChanged: (value) {
+              setState(() {
+                _showError = _validateInput(value) != null;
+              });
+            },
             decoration: InputDecoration(
-              errorText: _validateInput(controller.text),
+              errorText:
+                  _showError ? _validateInput(widget.controller.text) : null,
             ),
           ),
         ),
         ElevatedButton(
           onPressed: () {
-            if (_validateInput(controller.text) == null) {
-              Navigator.pop(context, int.parse(controller.text));
+            if (_validateInput(widget.controller.text) == null) {
+              Navigator.pop(context, int.parse(widget.controller.text));
             }
           },
-          child: const Text('Salvar'),
+          child: const Text(
+            'Salvar',
+            style: TextStyle(fontSize: 16),
+          ),
         ),
       ],
     );
@@ -81,7 +97,7 @@ class ImageCountInput extends StatelessWidget {
   String? _validateInput(String value) {
     final number = int.tryParse(value);
     if (number == null || number < 1 || number > 20) {
-      return 'Opa! Valor inválido.';
+      return 'Opa! Valor inválido. Escolha entre 1 e 20.';
     }
     return null;
   }
@@ -101,8 +117,8 @@ class CreatorsList extends StatelessWidget {
         ),
         SizedBox(height: 8),
         Text('Luis Henrique Sousa Brasil'),
-        Text('Laércio'),
-        Text('Laércio'),
+        Text('Laercio Souza da Silva'),
+        Text('José Fhilipe Martins Coelho'),
         SizedBox(height: 16),
       ],
     );

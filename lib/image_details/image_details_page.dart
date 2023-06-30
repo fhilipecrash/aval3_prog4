@@ -1,4 +1,5 @@
-import 'imports/imports.dart';
+import '../imports/imports.dart';
+
 class ImageDetailsPage extends StatelessWidget {
   final Map<String, dynamic> image;
 
@@ -32,7 +33,7 @@ class ImageDetailsPage extends StatelessWidget {
                     'A imagem não pode ser carregada, pois é um arquivo diferente de imagem. Por favor, clique no botão próximo do copyright para abrir o arquivo no navegador.',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 15,
+                      fontSize: 18,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -59,9 +60,14 @@ class ImageDetailsPage extends StatelessWidget {
           if (image['media_type'] == 'video')
             Center(
               child: ElevatedButton(
-                onPressed: () => _launchURL(image['url']),
-                child: const Text('Abrir'),
-              ),
+                  onPressed: () => _launchURL(image['url']),
+                  style: ButtonStyle(
+                      minimumSize:
+                          MaterialStateProperty.all(const Size(150, 50))),
+                  child: const Text(
+                    'Abrir',
+                    style: TextStyle(fontSize: 26),
+                    )),
             ),
         ],
       ),

@@ -1,4 +1,4 @@
-import 'imports/imports.dart';
+import '../imports/imports.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -9,9 +9,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'NASA API',
       theme: ThemeData(
-        primarySwatch: Colors.purple,
         colorScheme: const ColorScheme.dark(
           background: Color(0xFF0D1212),
+          primary: Colors.white
         ),
       ),
       home: const HomePage(),
