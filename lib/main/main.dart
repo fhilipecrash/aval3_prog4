@@ -1,4 +1,4 @@
-import '../imports/imports.dart';
+import '../../imports/imports.dart';
 
 void main() {
   runApp(const MyApp());

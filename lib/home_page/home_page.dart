@@ -1,6 +1,5 @@
-import 'package:http/http.dart' as http;
-
 import '../imports/imports.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -156,6 +155,16 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           );
                                         },
+                                        loadingBuilder: (BuildContext context,
+                                            Widget child,
+                                            ImageChunkEvent? loadingProgress) {
+                                          if (loadingProgress == null) {
+                                            return child;
+                                          }
+                                          return const Center(
+                                            child: CircularProgressIndicator(),
+                                          );
+                                        },
                                       )
                                     : Container(),
                               ),
@@ -166,7 +175,7 @@ class _HomePageState extends State<HomePage> {
                                 child: Container(
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    gradient: LinearGradient(
+                                    gradient: const LinearGradient(
                                       colors: [
                                         Colors.transparent,
                                         Colors.black54
