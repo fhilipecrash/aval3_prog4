@@ -32,7 +32,7 @@ class ImageDetailsPage extends StatelessWidget {
                   child: Text(
                     'A imagem não pode ser carregada, pois é um arquivo diferente de imagem. Por favor, clique no botão próximo do copyright para abrir o arquivo no navegador.',
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.grey,
                       fontSize: 18,
                     ),
                     textAlign: TextAlign.center,
