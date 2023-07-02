@@ -8,4 +8,4 @@ Programação 5 - Flutter - 2023
 
 <h1 align="center"> Como rodar <h1>
 
-Para rodar o projeto, é necessário ter o Flutter instalado na máquina, e um emulador ou um dispositivo físico conectado. Após isso, basta rodar o comando `flutter run` na pasta do projeto.
+<h2>Para rodar o projeto, é necessário ter o Flutter instalado na máquina, e um emulador ou um dispositivo físico conectado. Após isso, basta rodar o comando `flutter run` na pasta do projeto.</h2>
