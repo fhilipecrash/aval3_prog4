@@ -20,11 +20,23 @@ class _HomePageState extends State<HomePage> {
   }
 
   void generateDates(int imageCount) {
-    for (var i = 0; i < imageCount; i++) {
-      DateTime startDate = DateTime(1995, 7, 1);
-      DateTime currentDate = DateTime.now();
-      DateTime randomDate = generateRandomDate(startDate, currentDate);
-      fetchImageData(randomDate);
+    List<String> filmIds = [
+      'tt9362722',
+      'tt1877830',
+      'tt0816692',
+      'tt0271383',
+      'tt0246578',
+      'tt0861739',
+      'tt0144084',
+      'tt0137523',
+      'tt5180504',
+      'tt5753856',
+      'tt4154796',
+      'tt0298148'
+    ];
+
+    for (var id in filmIds) {
+      fetchImageData(id);
     }
   }
 
@@ -35,13 +47,13 @@ class _HomePageState extends State<HomePage> {
     return start.add(randomDuration);
   }
 
-  Future<void> fetchImageData(DateTime date) async {
+  Future<void> fetchImageData(String filmId) async {
     setState(() {
       isLoading = true;
     });
 
     final movieResponse = await http.get(
-        Uri.parse('https://moviesdatabase.p.rapidapi.com/titles/tt9362722'),
+        Uri.parse('https://moviesdatabase.p.rapidapi.com/titles/$filmId'),
         headers: {
           "X-RapidAPI-Key":
               "9e95e0c27cmsh9eda1e618e22853p1418f3jsn3fe2d9da6093",
@@ -105,7 +117,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'NASA API',
+          'FILMES',
           style: TextStyle(fontSize: 20),
         ),
         centerTitle: true,
