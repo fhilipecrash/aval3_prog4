@@ -36,24 +36,44 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> fetchImageData(DateTime date) async {
-    String apiKey = "8uB1eb3DyZqKQLKsndfi2F69gZD0PDtqPQgc9GaL";
-    String url =
-        "https://api.nasa.gov/planetary/apod?api_key=$apiKey&date=${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
+    setState(() {
+      isLoading = true;
+    });
+
+    final movieResponse = await http.get(
+        Uri.parse('https://moviesdatabase.p.rapidapi.com/titles/tt9362722'),
+        headers: {
+          "X-RapidAPI-Key":
+              "9e95e0c27cmsh9eda1e618e22853p1418f3jsn3fe2d9da6093",
+          "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com"
+        });
 
     setState(() {
       isLoading = true;
     });
 
-    final response = await http.get(Uri.parse(url));
+    final response = json.decode(movieResponse.body);
+
+    Map<String, dynamic> formattedItem = {};
+    formattedItem['url'] = response["results"]['primaryImage']['url'];
+    formattedItem['title'] = response["results"]['titleText']['text'];
+    String day = "${response['results']['releaseDate']['day']}".length == 1
+        ? '0${response["results"]['releaseDate']['day']}'
+        : '${response["results"]['releaseDate']['day']}';
+    String month = "${response['results']['releaseDate']['month']}".length == 1
+        ? '0${response["results"]['releaseDate']['month']}'
+        : '${response["results"]['releaseDate']['month']}';
+    formattedItem['date'] =
+        "${response["results"]['releaseDate']['year']}-$month-$day";
+    formattedItem['explanation'] = "SJIASJIAJSIAJSIAJSIAJSIJ";
 
     setState(() {
       isLoading = false;
     });
 
     if (response.statusCode == 200) {
-      final data = json.decode(response.body);
       setState(() {
-        imageUrls.add(data);
+        imageUrls.add(formattedItem);
       });
     }
   }
