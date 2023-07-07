@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
       isLoading = true;
     });
 
-    final response = json.decode(movieResponse.body);
+    Map<String, dynamic> response = json.decode(movieResponse.body);
 
     Map<String, dynamic> formattedItem = {};
     formattedItem['url'] = response["results"]['primaryImage']['url'];
@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
       isLoading = false;
     });
 
-    if (response.statusCode == 200) {
+    if (movieResponse.statusCode == 200) {
       setState(() {
         imageUrls.add(formattedItem);
       });
