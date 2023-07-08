@@ -53,37 +53,34 @@ class _HomePageState extends State<HomePage> {
     });
 
     final movieResponse = await http.get(
-        Uri.parse('https://moviesdatabase.p.rapidapi.com/titles/$filmId'),
-        headers: {
-          "X-RapidAPI-Key":
-              "9e95e0c27cmsh9eda1e618e22853p1418f3jsn3fe2d9da6093",
-          "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com"
-        });
-
-    setState(() {
-      isLoading = true;
-    });
-
-    Map<String, dynamic> response = json.decode(movieResponse.body);
-
-    Map<String, dynamic> formattedItem = {};
-    formattedItem['url'] = response["results"]['primaryImage']['url'];
-    formattedItem['title'] = response["results"]['titleText']['text'];
-    String day = "${response['results']['releaseDate']['day']}".length == 1
-        ? '0${response["results"]['releaseDate']['day']}'
-        : '${response["results"]['releaseDate']['day']}';
-    String month = "${response['results']['releaseDate']['month']}".length == 1
-        ? '0${response["results"]['releaseDate']['month']}'
-        : '${response["results"]['releaseDate']['month']}';
-    formattedItem['date'] =
-        "${response["results"]['releaseDate']['year']}-$month-$day";
-    formattedItem['explanation'] = "SJIASJIAJSIAJSIAJSIAJSIJ";
+      Uri.parse('https://moviesdatabase.p.rapidapi.com/titles/$filmId'),
+      headers: {
+        "X-RapidAPI-Key": "9e95e0c27cmsh9eda1e618e22853p1418f3jsn3fe2d9da6093",
+        "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com"
+      },
+    );
 
     setState(() {
       isLoading = false;
     });
 
     if (movieResponse.statusCode == 200) {
+      Map<String, dynamic> response = json.decode(movieResponse.body);
+
+      Map<String, dynamic> formattedItem = {};
+      formattedItem['url'] = response["results"]['primaryImage']['url'];
+      formattedItem['title'] = response["results"]['titleText']['text'];
+      String day = "${response['results']['releaseDate']['day']}".length == 1
+          ? '0${response["results"]['releaseDate']['day']}'
+          : '${response["results"]['releaseDate']['day']}';
+      String month =
+          "${response['results']['releaseDate']['month']}".length == 1
+              ? '0${response["results"]['releaseDate']['month']}'
+              : '${response["results"]['releaseDate']['month']}';
+      formattedItem['date'] =
+          "${response["results"]['releaseDate']['year']}-$month-$day";
+      formattedItem['explanation'] = "Não fornecido pela API";
+
       setState(() {
         imageUrls.add(formattedItem);
       });
